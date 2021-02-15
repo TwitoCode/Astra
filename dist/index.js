@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-require("dotenv/config");
 const messages_1 = require("./messages");
 const loop_1 = require("./utils/loop");
 const client = new discord_js_1.Client();
