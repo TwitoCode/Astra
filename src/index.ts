@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { Client } from "discord.js";
 import "dotenv/config";
 import { randomMessages } from "./messages";
+import { loop } from "./utils/loop";
 import { random } from "./utils/random";
 
 const client = new Client();
@@ -28,5 +29,13 @@ client.on("message", (message) => {
 
 	if (command === "dice") {
 		return message.channel.send(`${random(1, 6)} was rolled`);
+	}
+
+	if (command === "spam") {
+		if (value?.length > 0) {
+			return loop(() => message.channel.send(value), 5);
+		}
+
+		return loop(() => message.channel.send("Spam"), 5);
 	}
 });

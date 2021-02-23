@@ -7,6 +7,7 @@ const chalk_1 = __importDefault(require("chalk"));
 const discord_js_1 = require("discord.js");
 require("dotenv/config");
 const messages_1 = require("./messages");
+const loop_1 = require("./utils/loop");
 const random_1 = require("./utils/random");
 const client = new discord_js_1.Client();
 client.login(process.env.BOT_TOKEN);
@@ -28,5 +29,11 @@ client.on("message", (message) => {
     }
     if (command === "dice") {
         return message.channel.send(`${random_1.random(1, 6)} was rolled`);
+    }
+    if (command === "spam") {
+        if (value?.length > 0) {
+            return loop_1.loop(() => message.channel.send(value), 5);
+        }
+        return loop_1.loop(() => message.channel.send("Spam"), 5);
     }
 });

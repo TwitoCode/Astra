@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loop = void 0;
-function loop(amount, fn) {
+function loop(fn, amount) {
     for (let i = 0; i < amount; i++) {
         fn();
     }
