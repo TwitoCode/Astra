@@ -1,13 +1,19 @@
 import chalk from "chalk";
 import { Client } from "discord.js";
+// import "dotenv/config";
+import express from "express";
 import { randomMessages } from "./messages";
 import { loop } from "./utils/loop";
 import { random } from "./utils/random";
 
+const app = express();
 const client = new Client();
 
+app.get("/", (_, res) => res.send("Astra Bot Server"));
+app.listen(process.env.PORT, () => console.log(chalk.blueBright.bold("Astra Server is Running!")));
+
 client.login(process.env.BOT_TOKEN);
-client.once("ready", () => console.log(chalk.blueBright.bold("Astra is Running!")));
+client.once("ready", () => console.log(chalk.greenBright.bold("Astra is Running!")));
 
 client.on("message", (message) => {
 	const [initializeCommand, command, value] = message.content.split(" ");

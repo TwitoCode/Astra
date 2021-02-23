@@ -5,12 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const discord_js_1 = require("discord.js");
+const express_1 = __importDefault(require("express"));
 const messages_1 = require("./messages");
 const loop_1 = require("./utils/loop");
 const random_1 = require("./utils/random");
+const app = express_1.default();
 const client = new discord_js_1.Client();
+app.get("/", (_, res) => res.send("Astra Bot Server"));
+app.listen(process.env.PORT, () => console.log(chalk_1.default.blueBright.bold("Astra Server is Running!")));
 client.login(process.env.BOT_TOKEN);
-client.once("ready", () => console.log(chalk_1.default.blueBright.bold("Astra is Running!")));
+client.once("ready", () => console.log(chalk_1.default.greenBright.bold("Astra is Running!")));
 client.on("message", (message) => {
     const [initializeCommand, command, value] = message.content.split(" ");
     if (message.content.length === 0)
