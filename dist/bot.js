@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initBot = void 0;
 const chalk_1 = __importDefault(require("chalk"));
 const discord_js_1 = require("discord.js");
-require("dotenv/config");
 const messages_1 = require("./messages");
 const loop_1 = require("./utils/loop");
 const random_1 = require("./utils/random");
