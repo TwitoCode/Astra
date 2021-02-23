@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"skipLibCheck": true,
 		"target": "esnext",
 		"module": "commonjs",
 		"alwaysStrict": true,
@@ -19,7 +20,6 @@
 		"emitDeclarationOnly": false,
 		"strictPropertyInitialization": false,
 		"emitDecoratorMetadata": true,
-		"skipLibCheck": true,
 		"skipDefaultLibCheck": true
 	},
 	"include": ["src"],
