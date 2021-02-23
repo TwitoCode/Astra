@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { Client } from "discord.js";
-import "dotenv/config";
 import { randomMessages } from "./messages";
 import { loop } from "./utils/loop";
 import { random } from "./utils/random";

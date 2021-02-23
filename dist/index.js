@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const discord_js_1 = require("discord.js");
-require("dotenv/config");
 const messages_1 = require("./messages");
 const loop_1 = require("./utils/loop");
 const random_1 = require("./utils/random");
