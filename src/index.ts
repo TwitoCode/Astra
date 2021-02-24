@@ -1,6 +1,6 @@
 import { initBot } from "./bot";
 import { initServer } from "./server";
-import "dotenv/config";
+// import "dotenv/config";
 
 initBot();
 initServer();
