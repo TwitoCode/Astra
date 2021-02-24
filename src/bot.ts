@@ -1,43 +1,51 @@
 import chalk from "chalk";
-import { Client } from "discord.js";
-import { randomMessages } from "./messages";
+import { Client as DiscordClient } from "discord.js";
+import { Controller } from "./controllers/Controller";
+import { DiceController } from "./controllers/DiceController";
+import { RandomMessageController } from "./controllers/RandomMessageController";
+import { RandomNumberController } from "./controllers/RandomNumberController";
+import { SpamController } from "./controllers/SpamController";
 import { loop } from "./utils/loop";
-import { random } from "./utils/random";
 
-const client = new Client();
+class Client {
+	client: DiscordClient;
+	controllers: Controller[];
 
-client.on("message", (message) => {
-	const [initializeCommand, command, value, ...sentMessage] = message.content.split(" ");
-	const messageAfterCommand = `${value} ${sentMessage.join(" ")}`;
+	constructor(controllers: Controller[]) {
+		this.client = new DiscordClient();
+		this.controllers = controllers;
 
-	if (message.content.length === 0) return;
-	if (initializeCommand !== "astra") return;
+		this.client.login(process.env.BOT_TOKEN);
+		this.client.once("ready", () => console.log(chalk.greenBright.bold("Astra Bot is Running!")));
 
-	if (command === "random") {
-		if (value === "message") {
-			const index = random(1, randomMessages.length);
-			return message.channel.send(randomMessages[index]);
-		}
-
-		if (value === "number") {
-			return message.channel.send(random(1, 100));
-		}
+		this.commandHandler();
 	}
 
-	if (command === "dice") {
-		return message.channel.send(`${random(1, 6)} was rolled`);
-	}
+	commandHandler() {
+		const { client, controllers } = this;
 
-	if (command === "spam") {
-		if (value?.length > 0) {
-			return loop(() => message.channel.send(messageAfterCommand), 5);
-		}
+		client.on("message", (message) => {
+			const [prefix] = message.content.toLowerCase().split(" ");
+			if (prefix !== "astra") return;
 
-		return loop(() => message.channel.send("Spam"), 5);
+			controllers.forEach((controller) => {
+				const output = controller.handleCommand(message.content.toLowerCase(), message.content);
+				
+				if (controller instanceof SpamController) {
+					return output !== "" && loop(() => message.channel.send(output), 5);
+				}
+
+				output !== "" && message.channel.send(output);
+			});
+		});
 	}
-});
+}
 
 export function initBot() {
-	client.login(process.env.BOT_TOKEN);
-	client.once("ready", () => console.log(chalk.greenBright.bold("Astra Bot is Running!")));
+	new Client([
+		new DiceController(),
+		new RandomNumberController(),
+		new RandomMessageController(),
+		new SpamController(),
+	]);
 }
