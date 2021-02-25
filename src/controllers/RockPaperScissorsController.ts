@@ -1,14 +1,14 @@
 import { random } from "../utils/random";
-import { Controller } from "./Controller";
+import { Controller, HandleCommandOptions } from "./Controller";
 
 export class RockPaperScissorsController implements Controller {
-  options: string[] = ["Rock", "Paper", "Scissors"];
+	options: string[] = ["Rock", "Paper", "Scissors"];
 
-  handleCommand(command: string) {
-    const [, commandType] = command.split(" ");
-    if (commandType !== "rps") return "";
+	handleCommand({ command }: HandleCommandOptions) {
+		const [, commandType] = command.split(" ");
+		if (commandType !== "rps") return "";
 
-    const index = random(0, this.options.length - 1);
-    return `${this.options[index]}`;
-  }
+		const index = random(0, this.options.length - 1);
+		return `${this.options[index]}`;
+	}
 }

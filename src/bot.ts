@@ -18,15 +18,19 @@ export class Bot {
 		this.commandHandler();
 	}
 
-	commandHandler() {
+	async commandHandler() {
 		const { client, controllers } = this;
 
 		client.on("message", (message) => {
 			const [prefix] = message.content.toLowerCase().split(" ");
 			if (prefix !== "astra") return;
 
-			controllers.forEach((controller) => {
-				const output = controller.handleCommand(message.content.toLowerCase(), message.content);
+			controllers.forEach(async (controller) => {
+				const output = await controller.handleCommand({
+					command: message.content.toLowerCase(),
+					messageContent: message.content,
+					message,
+				});
 
 				if (controller instanceof SpamController) {
 					return output !== "" && loop(() => message.channel.send(output), 5);

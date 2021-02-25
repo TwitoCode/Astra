@@ -1,3 +1,11 @@
+import { Message } from "discord.js";
+
 export interface Controller {
-  handleCommand: (command: string, messageContent?: string) => string;
+	handleCommand(options: HandleCommandOptions): string | Promise<string>;
+}
+
+export interface HandleCommandOptions {
+	command: string;
+	messageContent?: string;
+	message?: Message;
 }

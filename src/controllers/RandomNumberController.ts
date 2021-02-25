@@ -1,8 +1,8 @@
 import { random } from "../utils/random";
-import { Controller } from "./Controller";
+import { Controller, HandleCommandOptions } from "./Controller";
 
 export class RandomNumberController implements Controller {
-	handleCommand(command: string) {
+	handleCommand({ command }: HandleCommandOptions) {
 		const [, commandType, commandValue] = command.split(" ");
 
 		if (commandType !== "random") return "";

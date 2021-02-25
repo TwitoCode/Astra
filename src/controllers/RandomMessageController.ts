@@ -1,9 +1,9 @@
 import { randomMessages } from "../assets/messages";
 import { random } from "../utils/random";
-import { Controller } from "./Controller";
+import { Controller, HandleCommandOptions } from "./Controller";
 
 export class RandomMessageController implements Controller {
-	handleCommand(command: string) {
+	handleCommand({ command }: HandleCommandOptions) {
 		const [, commandType, commandValue] = command.split(" ");
 
 		if (commandType !== "random") return "";

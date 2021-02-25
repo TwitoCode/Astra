@@ -1,12 +1,12 @@
 import { random } from "../utils/random";
-import { Controller } from "./Controller";
+import { Controller, HandleCommandOptions } from "./Controller";
 
 export class DiceController implements Controller {
-  handleCommand(command: string) {
-    const [, commandType] = command.split(" ");
-    if (commandType !== "dice") return "";
+	handleCommand({ command }: HandleCommandOptions) {
+		const [, commandType] = command.split(" ");
+		if (commandType !== "dice") return "";
 
-    const number = random(1, 6);
-    return `${number} was rolled`;
-  }
+		const number = random(1, 6);
+		return `${number} was rolled`;
+	}
 }
