@@ -1,14 +1,10 @@
-import { RockPaperScissorsController } from "./controllers/RockPaperScissorsController";
 import chalk from "chalk";
 import { Client as DiscordClient } from "discord.js";
 import { Controller } from "./controllers/Controller";
-import { DiceController } from "./controllers/DiceController";
-import { RandomMessageController } from "./controllers/RandomMessageController";
-import { RandomNumberController } from "./controllers/RandomNumberController";
 import { SpamController } from "./controllers/SpamController";
 import { loop } from "./utils/loop";
 
-class Bot {
+export class Bot {
 	client: DiscordClient;
 	controllers: Controller[];
 
@@ -40,14 +36,4 @@ class Bot {
 			});
 		});
 	}
-}
-
-export function initBot() {
-	new Bot([
-		new DiceController(),
-		new RandomNumberController(),
-		new RandomMessageController(),
-		new SpamController(),
-		new RockPaperScissorsController()
-	]);
 }
