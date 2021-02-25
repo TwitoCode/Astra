@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initBot = void 0;
 const chalk_1 = __importDefault(require("chalk"));
-require("dotenv/config");
 const mongoose_1 = __importDefault(require("mongoose"));
 const bot_1 = require("./bot");
 const DiceController_1 = require("./controllers/DiceController");

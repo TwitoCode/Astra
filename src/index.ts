@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import "dotenv/config";
+// import "dotenv/config";
 import mongoose from "mongoose";
 import { Bot } from "./bot";
 import { DiceController } from "./controllers/DiceController";
@@ -20,7 +20,7 @@ async function initDatabase() {
 }
 
 export async function initBot() {
-  mongoose.set("useCreateIndex", true);
+	mongoose.set("useCreateIndex", true);
 	initDatabase();
 
 	const settings = await SettingsModel.findOne();
