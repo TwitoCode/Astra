@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { random } from "../utils/random";
 import { Controller, HandleCommandOptions } from "./Controller";
 
@@ -5,10 +6,14 @@ export class RockPaperScissorsController implements Controller {
 	options: string[] = ["Rock", "Paper", "Scissors"];
 
 	handleCommand({ command }: HandleCommandOptions) {
-		const [, commandType] = command.split(" ");
-		if (commandType !== "rps") return "";
+		try {
+			const [, commandType] = command.split(" ");
+			if (commandType !== "rps") return "";
 
-		const index = random(0, this.options.length - 1);
-		return `${this.options[index]}`;
+			const index = random(0, this.options.length - 1);
+			return `${this.options[index]}`;
+		} catch (err) {
+			throw new Error(chalk.redBright.bold(err.message));
+		}
 	}
 }

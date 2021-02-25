@@ -19,25 +19,29 @@ export class Bot {
 	}
 
 	async commandHandler() {
-		const { client, controllers } = this;
-
-		client.on("message", (message) => {
-			const [prefix] = message.content.toLowerCase().split(" ");
-			if (prefix !== "astra") return;
-
-			controllers.forEach(async (controller) => {
-				const output = await controller.handleCommand({
-					command: message.content.toLowerCase(),
-					messageContent: message.content,
-					message,
+		try {
+			const { client, controllers } = this;
+	
+			client.on("message", (message) => {
+				const [prefix] = message.content.toLowerCase().split(" ");
+				if (prefix !== "astra") return;
+	
+				controllers.forEach(async (controller) => {
+					const output = await controller.handleCommand({
+						command: message.content.toLowerCase(),
+						messageContent: message.content,
+						message,
+					});
+	
+					if (controller instanceof SpamController) {
+						return output !== "" && loop(() => message.channel.send(output), 5);
+					}
+	
+					output !== "" && message.channel.send(output);
 				});
-
-				if (controller instanceof SpamController) {
-					return output !== "" && loop(() => message.channel.send(output), 5);
-				}
-
-				output !== "" && message.channel.send(output);
 			});
-		});
+		} catch (err) {
+			throw new Error(chalk.redBright.bold(err.message));
+		}
 	}
 }

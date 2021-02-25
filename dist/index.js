@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initBot = void 0;
 const chalk_1 = __importDefault(require("chalk"));
+require("dotenv/config");
 const mongoose_1 = __importDefault(require("mongoose"));
 const bot_1 = require("./bot");
 const DiceController_1 = require("./controllers/DiceController");
@@ -24,17 +25,24 @@ async function initDatabase() {
     }
 }
 async function initBot() {
-    mongoose_1.default.set("useCreateIndex", true);
-    initDatabase();
-    const settings = await settings_1.SettingsModel.findOne();
-    const bot = new bot_1.Bot([
-        new DiceController_1.DiceController(),
-        new RandomNumberController_1.RandomNumberController(),
-        new RandomMessageController_1.RandomMessageController(),
-        new SpamController_1.SpamController(settings),
-        new RockPaperScissorsController_1.RockPaperScissorsController(),
-        new SpamControlController_1.SpamControlController(settings),
-    ]);
+    try {
+        mongoose_1.default.set("useCreateIndex", true);
+        initDatabase();
+        const settings = await settings_1.SettingsModel.findOne();
+        const controllersWithSettings = settings
+            ? [new SpamController_1.SpamController(settings), new SpamControlController_1.SpamControlController(settings)]
+            : [];
+        const bot = new bot_1.Bot([
+            new DiceController_1.DiceController(),
+            new RandomNumberController_1.RandomNumberController(),
+            new RandomMessageController_1.RandomMessageController(),
+            new RockPaperScissorsController_1.RockPaperScissorsController(),
+            ...controllersWithSettings,
+        ]);
+    }
+    catch (err) {
+        console.log(chalk_1.default.redBright.bold(err.message));
+    }
 }
 exports.initBot = initBot;
 initBot();

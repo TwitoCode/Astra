@@ -20,7 +20,6 @@ function ping() {
         const hour = new Date().getHours();
         const canPing = !(hour >= 0 && hour < 6);
         if (canPing) {
-            console.log("I have fetched");
             node_fetch_1.default(process.env.SERVER_URL);
             return;
         }

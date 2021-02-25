@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 
 export interface Controller {
-	handleCommand(options: HandleCommandOptions): string | Promise<string>;
+	handleCommand(options: HandleCommandOptions): string | Promise<string> | Promise<string | never>;
 }
 
 export interface HandleCommandOptions {

@@ -19,7 +19,6 @@ function ping() {
 		const canPing = !(hour >= 0 && hour < 6);
 
 		if (canPing) {
-			console.log("I have fetched");
 			fetch(process.env.SERVER_URL!);
 			return;
 		}
