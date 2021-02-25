@@ -10,7 +10,7 @@ const node_fetch_1 = __importDefault(require("node-fetch"));
 const app = express_1.default();
 app.get("/", (_, res) => res.send("Astra Bot Server"));
 function initServer() {
-    app.listen(process.env.PORT, () => console.log(chalk_1.default.blueBright.bold("Astra Server is Running!")));
+    app.listen(process.env.PORT, () => console.log(chalk_1.default.red("Astra Server is Running!")));
     ping();
 }
 exports.initServer = initServer;

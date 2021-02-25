@@ -2,7 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SpamController = void 0;
 class SpamController {
-    handleCommand(command, messageContent) {
+    constructor(settings) {
+        this.settings = settings;
+    }
+    handleCommand({ command, messageContent }) {
+        if (this.settings.spamming === false)
+            return "";
         const [, commandType] = command.split(" ");
         const [, , ...commandValue] = messageContent.split(" ");
         if (commandType !== "spam")

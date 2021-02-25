@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RandomNumberController = void 0;
 const random_1 = require("../utils/random");
 class RandomNumberController {
-    handleCommand(command) {
+    handleCommand({ command }) {
         const [, commandType, commandValue] = command.split(" ");
         if (commandType !== "random")
             return "";
