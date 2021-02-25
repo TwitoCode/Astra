@@ -21,7 +21,7 @@
 	},
 	"scripts": {
 		"dev": "tsnd --clear --watch --respawn -- src/index.ts",
-		"dev:nodemon": "nodemon src/index.ts",
+		"start:dev": "nodemon src/index.ts",
 		"start:build": "tsc -p ./tsconfig.json",
 		"start": "node dist/index.js",
 		"push": "git push heroku master"

@@ -1,4 +1,4 @@
-import { randomMessages } from "../messages";
+import { randomMessages } from "../assets/messages";
 import { random } from "../utils/random";
 import { Controller } from "./Controller";
 

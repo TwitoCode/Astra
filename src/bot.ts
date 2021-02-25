@@ -1,3 +1,4 @@
+import { RockPaperScissorsController } from "./controllers/RockPaperScissorsController";
 import chalk from "chalk";
 import { Client as DiscordClient } from "discord.js";
 import { Controller } from "./controllers/Controller";
@@ -7,7 +8,7 @@ import { RandomNumberController } from "./controllers/RandomNumberController";
 import { SpamController } from "./controllers/SpamController";
 import { loop } from "./utils/loop";
 
-class Client {
+class Bot {
 	client: DiscordClient;
 	controllers: Controller[];
 
@@ -16,7 +17,7 @@ class Client {
 		this.controllers = controllers;
 
 		this.client.login(process.env.BOT_TOKEN);
-		this.client.once("ready", () => console.log(chalk.greenBright.bold("Astra Bot is Running!")));
+		this.client.once("ready", () => console.log(chalk.cyan("Astra Bot is Running!")));
 
 		this.commandHandler();
 	}
@@ -30,7 +31,7 @@ class Client {
 
 			controllers.forEach((controller) => {
 				const output = controller.handleCommand(message.content.toLowerCase(), message.content);
-				
+
 				if (controller instanceof SpamController) {
 					return output !== "" && loop(() => message.channel.send(output), 5);
 				}
@@ -42,10 +43,11 @@ class Client {
 }
 
 export function initBot() {
-	new Client([
+	new Bot([
 		new DiceController(),
 		new RandomNumberController(),
 		new RandomMessageController(),
 		new SpamController(),
+		new RockPaperScissorsController()
 	]);
 }
