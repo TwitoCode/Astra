@@ -14,19 +14,22 @@ export class SpamControlController implements Controller {
 		try {
 			const [, commandType, commandValue] = command.split(" ");
 
-			if (
-				!hasRole(
-					message!.member,
-					process.env.ADMIN_ROLE! || process.env.OWNER_ROLE! || process.env.SPECIAL_ROLE!
-				)
-			)
-				return "You scrub your not special enough to do that";
+			const memberHasRole = hasRole(
+				message!.member,
+				process.env.ADMIN_ROLE! || process.env.OWNER_ROLE! || process.env.SPECIAL_ROLE!
+			);
 
 			if (commandValue !== "spam") return "";
-			if (commandType === "turnoff") this.settings.spamming = false;
-			if (commandType === "turnon") this.settings.spamming = true;
 
-			this.settings.save();
+			if (commandType === "turnoff" && memberHasRole) {
+				this.settings.spamming = false;
+				this.settings.save();
+			} else if (commandType === "turnon" && memberHasRole) {
+				this.settings.spamming = true;
+				this.settings.save();
+			} else {
+				return "You scrub your not special enough to do that";
+			}
 
 			return `Spamming is turned ${this.settings.spamming ? "on" : "off"}`;
 		} catch (err) {
