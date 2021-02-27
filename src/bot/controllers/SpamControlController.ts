@@ -20,18 +20,20 @@ export class SpamControlController implements Controller {
 			if (commandValue !== "spam") return "";
 
 			if (commandType === "turnoff" && memberHasRole) {
-				if (settings.spamming === false) return "Spamming is already Off";
+				if (settings.spamming === false) return "Spamming is already off";
 
 				settings.spamming = false;
 				settings.save();
 			} else if (commandType === "turnon" && memberHasRole) {
+				if (settings.spamming === true) return "Spamming is already on";
+
 				settings.spamming = true;
 				settings.save();
 			} else {
-				return "dev You scrub your not special enough to do that";
+				return "You scrub your not special enough to do that";
 			}
 
-			return `dev Spamming is turned ${settings.spamming ? "on" : "off"}`;
+			return `Spamming is turned ${settings.spamming ? "on" : "off"}`;
 		} catch (err) {
 			throw new Error(chalk.redBright.bold(err.message));
 		}
