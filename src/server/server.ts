@@ -7,7 +7,7 @@ const app = express();
 app.get("/", (_, res) => res.send("Astra Bot Server"));
 
 export function initServer() {
-	app.listen(process.env.PORT, () => console.log(chalk.red("Astra Server is Running!")));
+	app.listen(process.env.PORT, () => console.log(chalk.cyan("Astra Server is Running!")));
 	ping();
 }
 

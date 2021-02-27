@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { hasRole } from "../utils/hasRole";
-import { SettingsSchemaType } from "./../models/settings";
+import { SettingsSchemaType } from "../models/settings";
 import { Controller, HandleCommandOptions } from "./Controller";
 
 export class SpamControlController implements Controller {
