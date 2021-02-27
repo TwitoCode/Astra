@@ -1,7 +1,12 @@
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
+
+type HandleCommandReturn = string | MessageEmbed | null;
 
 export interface Controller {
-	handleCommand(options: HandleCommandOptions): string | Promise<string> | Promise<string | never>;
+	loopResponse: boolean;
+	handleCommand(
+		options: HandleCommandOptions
+	): HandleCommandReturn | Promise<HandleCommandReturn> | Promise<HandleCommandReturn | never>;
 }
 
 export interface HandleCommandOptions {

@@ -1,9 +1,10 @@
 import chalk from "chalk";
-import { SettingsSchemaType } from "../models/settings";
+import { SettingsSchemaType } from "../../models/settings";
 import { Controller, HandleCommandOptions } from "./Controller";
 
 export class SpamController implements Controller {
 	settings: SettingsSchemaType;
+	loopResponse = true;
 
 	constructor(settings: SettingsSchemaType) {
 		this.settings = settings;
@@ -16,7 +17,7 @@ export class SpamController implements Controller {
 			const [, commandType] = command.split(" ");
 			const [, , ...commandValue] = messageContent!.split(" ");
 
-			if (commandType !== "spam") return "";
+			if (commandType !== "spam") return null;
 			if (commandValue.length === 0) return "Spamming";
 
 			return commandValue.join(" ");

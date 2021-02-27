@@ -1,7 +1,8 @@
 import { GuildMember } from "discord.js";
 
 export function hasRole(member: GuildMember | null, roles: number | number[]) {
-	const memberRoles = member!.roles.cache;
+	const memberRoles = member?.roles.cache;
+	if (!memberRoles) return false;
 
 	if (Array.isArray(roles)) {
 		for (const r of memberRoles.map((role) => role)) {
@@ -9,5 +10,5 @@ export function hasRole(member: GuildMember | null, roles: number | number[]) {
 		}
 	}
 
-	return memberRoles.find((r) => r.id === roles.toString());
+	return memberRoles.find((r) => r.id === roles.toString()) !== null || undefined;
 }

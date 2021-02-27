@@ -7,7 +7,8 @@ import { RandomNumberController } from "../bot/controllers/RandomNumberControlle
 import { RockPaperScissorsController } from "../bot/controllers/RockPaperScissorsController";
 import { SpamControlController } from "../bot/controllers/SpamControlController";
 import { SpamController } from "../bot/controllers/SpamController";
-import { SettingsModel } from "../bot/models/settings";
+import { SettingsModel } from "../models/settings";
+import { HelpController } from "./../bot/controllers/HelpController";
 
 export async function initBot() {
 	try {
@@ -17,13 +18,15 @@ export async function initBot() {
 			? [new SpamController(settings), new SpamControlController(settings)]
 			: [];
 
-		const bot = new Bot([
+		const controllers: Controller[] = [
 			new DiceController(),
 			new RandomNumberController(),
 			new RandomMessageController(),
 			new RockPaperScissorsController(),
-			...controllersWithSettings,
-		]);
+			new HelpController(),
+		];
+
+		new Bot([...controllers, ...controllersWithSettings]);
 	} catch (err) {
 		console.log(chalk.redBright.bold(err.message));
 	}

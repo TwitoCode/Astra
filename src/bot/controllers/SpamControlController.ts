@@ -1,11 +1,12 @@
 import chalk from "chalk";
-import { SettingsSchemaType } from "../models/settings";
+import { SettingsSchemaType } from "../../models/settings";
 import { hasRole } from "../utils/hasRole";
 import { Controller, HandleCommandOptions } from "./Controller";
 
 export class SpamControlController implements Controller {
 	settings: SettingsSchemaType;
-
+	loopResponse: false;
+	
 	constructor(settings: SettingsSchemaType) {
 		this.settings = settings;
 	}
@@ -17,7 +18,7 @@ export class SpamControlController implements Controller {
 
 			const memberHasRole = hasRole(message!.member, settings.roles);
 
-			if (commandValue !== "spam") return "";
+			if (commandValue !== "spam") return null;
 
 			if (commandType === "turnoff" && memberHasRole) {
 				if (settings.spamming === false) return "Spamming is already off";

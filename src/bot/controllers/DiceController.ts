@@ -3,11 +3,13 @@ import { random } from "../utils/random";
 import { Controller, HandleCommandOptions } from "./Controller";
 
 export class DiceController implements Controller {
+	loopResponse: false;
+	
 	handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType] = command.split(" ");
-			if (commandType !== "dice") return "";
-	
+			if (commandType !== "dice") return null;
+
 			const number = random(1, 6);
 			return `${number} was rolled`;
 		} catch (err) {
