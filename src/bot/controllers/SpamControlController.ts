@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import { hasRole } from "../utils/hasRole";
 import { SettingsSchemaType } from "../models/settings";
+import { hasRole } from "../utils/hasRole";
 import { Controller, HandleCommandOptions } from "./Controller";
 
 export class SpamControlController implements Controller {
@@ -12,26 +12,26 @@ export class SpamControlController implements Controller {
 
 	async handleCommand({ command, message }: HandleCommandOptions) {
 		try {
+			const { settings } = this;
 			const [, commandType, commandValue] = command.split(" ");
 
-			const memberHasRole = hasRole(
-				message!.member,
-				process.env.ADMIN_ROLE! || process.env.OWNER_ROLE! || process.env.SPECIAL_ROLE!
-			);
+			const memberHasRole = hasRole(message!.member, settings.roles);
 
 			if (commandValue !== "spam") return "";
 
 			if (commandType === "turnoff" && memberHasRole) {
-				this.settings.spamming = false;
-				this.settings.save();
+				if (settings.spamming === false) return "Spamming is already Off";
+
+				settings.spamming = false;
+				settings.save();
 			} else if (commandType === "turnon" && memberHasRole) {
-				this.settings.spamming = true;
-				this.settings.save();
+				settings.spamming = true;
+				settings.save();
 			} else {
-				return "You scrub your not special enough to do that";
+				return "dev You scrub your not special enough to do that";
 			}
 
-			return `Spamming is turned ${this.settings.spamming ? "on" : "off"}`;
+			return `dev Spamming is turned ${settings.spamming ? "on" : "off"}`;
 		} catch (err) {
 			throw new Error(chalk.redBright.bold(err.message));
 		}
