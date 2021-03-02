@@ -4,13 +4,13 @@ import { Controller, HandleCommandOptions } from "../Controller";
 
 interface WeatherResponse {
 	current: {
-		temp_c: -3.0;
-		is_day: 0;
+		temp_c: number;
+		is_day: number;
 		condition: {
-			text: "Partly cloudy";
+			text: string;
 		};
-		humidity: 50;
-		feelslike_c: -11.1;
+		humidity: number;
+		feelslike_c: number;
 	};
 }
 

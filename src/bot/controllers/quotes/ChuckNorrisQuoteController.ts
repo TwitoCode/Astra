@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import { devError } from "../../utils/devError";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-interface Response {
+interface ChuckNorrisQuoteResponse {
 	value: string;
 }
 
@@ -15,7 +15,7 @@ export class ChuckNorrisQuoteController implements Controller {
 
 			if (commandType.slice(0, 2).join(" ") !== "chuck norris") return null;
 
-			const res = await(await fetch(`https://api.chucknorris.io/jokes/random`)).json() as Response;
+			const res = await(await fetch(`https://api.chucknorris.io/jokes/random`)).json() as ChuckNorrisQuoteResponse;
 
 			return res.value;
 		} catch (err) {

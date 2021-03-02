@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { Client as DiscordClient } from "discord.js";
 import { Controller } from "./controllers/Controller";
+import { devError } from "./utils/devError";
 import { devSend } from "./utils/devSend";
 import { loop } from "./utils/loop";
 
@@ -19,10 +20,10 @@ export class Bot {
 	}
 
 	async commandHandler() {
-		try {
-			const { client, controllers } = this;
+		const { client, controllers } = this;
 
-			client.on("message", async (message) => {
+		client.on("message", async (message) => {
+			try {
 				const [prefix] = message.content.toLowerCase().split(" ");
 				if (prefix !== "astra") return;
 
@@ -42,9 +43,9 @@ export class Bot {
 					message.channel.send(devSend(output));
 					return;
 				}
-			});
-		} catch (err) {
-			throw new Error(chalk.redBright.bold(err.message));
-		}
+			} catch (err) {
+				message.channel.send(devError(err));
+			}
+		});
 	}
 }
