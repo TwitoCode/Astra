@@ -1,14 +1,23 @@
 import chalk from "chalk";
 import { Bot } from "../bot/bot";
+import { YodaTranslateController } from "../bot/controllers/apis/YodaTranslateController";
 import { Controller } from "../bot/controllers/Controller";
-import { DiceController } from "../bot/controllers/DiceController";
-import { RandomMessageController } from "../bot/controllers/RandomMessageController";
-import { RandomNumberController } from "../bot/controllers/RandomNumberController";
-import { RockPaperScissorsController } from "../bot/controllers/RockPaperScissorsController";
-import { SpamControlController } from "../bot/controllers/SpamControlController";
-import { SpamController } from "../bot/controllers/SpamController";
+import { DiceController } from "../bot/controllers/games/DiceController";
+import { RockPaperScissorsController } from "../bot/controllers/games/RockPaperScissorsController";
+import { HelpController } from "../bot/controllers/info/HelpController";
+import { SpamControlController } from "../bot/controllers/other/SpamControlController";
+import { SpamController } from "../bot/controllers/other/SpamController";
+import { RandomMessageController } from "../bot/controllers/random/RandomMessageController";
+import { RandomNumberController } from "../bot/controllers/random/RandomNumberController";
 import { SettingsModel } from "../models/settings";
-import { HelpController } from "./../bot/controllers/HelpController";
+import { AnimeQuotesController } from "./../bot/controllers/apis/AnimeQuotesController";
+import { BeLikeBillController } from "./../bot/controllers/apis/BeLikeBillController";
+import { BoredController } from "./../bot/controllers/apis/BoredController";
+import { BreakingBadQuoteController } from "./../bot/controllers/apis/BreakingBadQuoteController";
+import { ChuckNorrisQuoteController } from "./../bot/controllers/apis/ChuckNorrisQuoteController";
+import { RandomCatController } from "./../bot/controllers/apis/RandomCatController";
+import { RandomDogController } from "./../bot/controllers/apis/RandomDogController";
+import { WeatherController } from "./../bot/controllers/apis/WeatherController";
 
 export async function initBot() {
 	try {
@@ -24,6 +33,15 @@ export async function initBot() {
 			new RandomMessageController(),
 			new RockPaperScissorsController(),
 			new HelpController(),
+			new YodaTranslateController(),
+			new BoredController(),
+			new BreakingBadQuoteController(),
+			new ChuckNorrisQuoteController(),
+			new WeatherController(),
+			new RandomCatController(),
+			new RandomDogController(),
+			new AnimeQuotesController(),
+			new BeLikeBillController(),
 		];
 
 		new Bot([...controllers, ...controllersWithSettings]);

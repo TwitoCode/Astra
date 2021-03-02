@@ -1,6 +1,6 @@
-import chalk from "chalk";
-import { SettingsSchemaType } from "../../models/settings";
-import { Controller, HandleCommandOptions } from "./Controller";
+import { SettingsSchemaType } from "../../../models/settings";
+import { devError } from "../../utils/devError";
+import { Controller, HandleCommandOptions } from "../Controller";
 
 export class SpamController implements Controller {
 	settings: SettingsSchemaType;
@@ -22,7 +22,7 @@ export class SpamController implements Controller {
 
 			return commandValue.join(" ");
 		} catch (err) {
-			throw new Error(chalk.redBright.bold(err.message));
+			return devError(err);
 		}
 	}
 }

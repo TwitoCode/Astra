@@ -1,12 +1,12 @@
-import chalk from "chalk";
-import { SettingsSchemaType } from "../../models/settings";
-import { hasRole } from "../utils/hasRole";
-import { Controller, HandleCommandOptions } from "./Controller";
+import { SettingsSchemaType } from "../../../models/settings";
+import { devError } from "../../utils/devError";
+import { hasRole } from "../../utils/hasRole";
+import { Controller, HandleCommandOptions } from "../Controller";
 
 export class SpamControlController implements Controller {
 	settings: SettingsSchemaType;
 	loopResponse: false;
-	
+
 	constructor(settings: SettingsSchemaType) {
 		this.settings = settings;
 	}
@@ -36,7 +36,7 @@ export class SpamControlController implements Controller {
 
 			return `Spamming is turned ${settings.spamming ? "on" : "off"}`;
 		} catch (err) {
-			throw new Error(chalk.redBright.bold(err.message));
+			return devError(err);
 		}
 	}
 }

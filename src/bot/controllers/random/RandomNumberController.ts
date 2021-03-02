@@ -1,6 +1,6 @@
-import chalk from "chalk";
-import { random } from "../utils/random";
-import { Controller, HandleCommandOptions } from "./Controller";
+import { devError } from "../../utils/devError";
+import { random } from "../../utils/random";
+import { Controller, HandleCommandOptions } from "../Controller";
 
 export class RandomNumberController implements Controller {
 	loopResponse: false;
@@ -14,7 +14,7 @@ export class RandomNumberController implements Controller {
 
 			return random(1, 100).toString();
 		} catch (err) {
-			throw new Error(chalk.redBright.bold(err.message));
+			return devError(err);
 		}
 	}
 }

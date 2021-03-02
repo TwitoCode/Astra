@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import { random } from "../utils/random";
-import { Controller, HandleCommandOptions } from "./Controller";
+import { devError } from "../../utils/devError";
+import { random } from "../../utils/random";
+import { Controller, HandleCommandOptions } from "../Controller";
 
 export class DiceController implements Controller {
 	loopResponse: false;
-	
+
 	handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType] = command.split(" ");
@@ -13,7 +13,7 @@ export class DiceController implements Controller {
 			const number = random(1, 6);
 			return `${number} was rolled`;
 		} catch (err) {
-			throw new Error(chalk.redBright.bold(err.message));
+			return devError(err);
 		}
 	}
 }

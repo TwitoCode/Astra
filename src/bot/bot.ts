@@ -34,12 +34,13 @@ export class Bot {
 					});
 
 					if (output === null) continue;
-					
+
 					if (controller.loopResponse === true) {
 						return loop(() => message.channel.send(devSend(output)), 5);
 					}
 
 					message.channel.send(devSend(output));
+					return;
 				}
 			});
 		} catch (err) {
