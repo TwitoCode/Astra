@@ -1,3 +1,4 @@
+import { SettingsSchemaType } from "./../models/settings";
 import chalk from "chalk";
 import { Client as DiscordClient } from "discord.js";
 import { Controller } from "./controllers/Controller";
@@ -9,9 +10,9 @@ export class Bot {
 	client: DiscordClient;
 	controllers: Controller[];
 
-	constructor(controllers: Controller[]) {
+	constructor(settings: SettingsSchemaType, controllers: any[]) {
 		this.client = new DiscordClient();
-		this.controllers = controllers;
+		this.controllers = controllers.map((controller) => new controller(settings));
 
 		this.client.login(process.env.BOT_TOKEN);
 		this.client.once("ready", () => console.log(chalk.cyan("Astra Bot is Running!")));

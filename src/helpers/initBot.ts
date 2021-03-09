@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { Bot } from "../bot/bot";
-import { Controller } from "../bot/controllers/Controller";
 import { DiceController } from "../bot/controllers/games/DiceController";
 import { RockPaperScissorsController } from "../bot/controllers/games/RockPaperScissorsController";
 import { HelpController } from "../bot/controllers/info/HelpController";
@@ -25,7 +24,7 @@ export async function initBot() {
 		let settings: SettingsSchemaType | null = await SettingsModel.findOne();
 
 		while (settings == null) {
-			if ((await SettingsModel.find()).length === 0) {
+			if ((await SettingsModel.find).length === 0) {
 				const s = new SettingsModel({ roles: [], spamming: false });
 				settings = await s.save();
 				break;
@@ -35,28 +34,26 @@ export async function initBot() {
 			settings = await SettingsModel.findOne();
 		}
 
-		const controllersWithSettings: Controller[] = settings
-			? [new SpamController(settings), new SpamControlController(settings)]
-			: [];
+		const controllersWithSettings = settings ? [SpamController, SpamControlController] : [];
 
-		const controllers: Controller[] = [
-			new RandomNumberController(),
-			new RandomMessageController(),
-			new RandomCatController(),
-			new RandomDogController(),
-			new DiceController(),
-			new RockPaperScissorsController(),
-			new BreakingBadQuoteController(),
-			new ChuckNorrisQuoteController(),
-			new AnimeQuotesController(),
-			new YodaTranslateController(),
-			new BoredController(),
-			new BeLikeBillController(),
-			new WeatherController(),
-			new HelpController(),
+		const controllers = [
+			RandomNumberController,
+			RandomMessageController,
+			RandomCatController,
+			RandomDogController,
+			DiceController,
+			RockPaperScissorsController,
+			BreakingBadQuoteController,
+			ChuckNorrisQuoteController,
+			AnimeQuotesController,
+			YodaTranslateController,
+			BoredController,
+			BeLikeBillController,
+			WeatherController,
+			HelpController,
 		];
 
-		new Bot([...controllers, ...controllersWithSettings]);
+		new Bot(settings, [...controllers, ...controllersWithSettings]);
 	} catch (err) {
 		console.log(chalk.redBright.bold(devError(err)));
 	}

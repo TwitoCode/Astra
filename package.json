@@ -26,6 +26,7 @@
 		"start:dev": "nodemon src/index.ts",
 		"build": "tsc -p ./tsconfig.json",
 		"start": "yarn build && node dist/index.js",
-		"push": "git push heroku master && git push -u origin master"
+		"deploy": "git push heroku master && git push -u origin master",
+		"push": "git push -u origin master"
 	}
 }
