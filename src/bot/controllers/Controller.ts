@@ -1,12 +1,25 @@
 import { Message, MessageEmbed } from "discord.js";
+import { SettingsSchemaType } from "../../models/settings";
 
 type HandleCommandReturn = string | MessageEmbed | null;
 
-export interface Controller {
-	loopResponse: boolean;
-	handleCommand(
+export abstract class Controller {
+	loopResponse: boolean = false;
+
+	abstract handleCommand(
 		options: HandleCommandOptions
 	): HandleCommandReturn | Promise<HandleCommandReturn> | Promise<HandleCommandReturn | never>;
+}
+
+export abstract class ControllerWithSettings extends Controller {
+	settings: SettingsSchemaType;
+
+	constructor(settings: SettingsSchemaType) {
+		super();
+		this.settings = settings;
+	}
+
+	abstract handleCommand(options: HandleCommandOptions): HandleCommandReturn | Promise<HandleCommandReturn>;
 }
 
 export interface HandleCommandOptions {

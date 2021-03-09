@@ -14,9 +14,7 @@ interface WeatherResponse {
 	};
 }
 
-export class WeatherController implements Controller {
-	loopResponse: false;
-
+export class WeatherController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType, commandValue] = command.split(" ");

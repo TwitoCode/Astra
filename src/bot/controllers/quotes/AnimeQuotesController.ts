@@ -8,16 +8,16 @@ interface AnimeQuotesResponse {
 	character: string;
 }
 
-export class AnimeQuotesController implements Controller {
-	loopResponse: false;
-
+export class AnimeQuotesController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, ...commandType] = command.split(" ");
 
 			if (commandType.slice(0, 2).join(" ") !== "anime quote") return null;
 
-			const res = (await (await fetch(`https://animechan.vercel.app/api/random`)).json()) as AnimeQuotesResponse;
+			const res = (await (
+				await fetch(`https://animechan.vercel.app/api/random`)
+			).json()) as AnimeQuotesResponse;
 
 			return `${res.quote} -${res.character}, ${res.anime}`;
 		} catch (err) {

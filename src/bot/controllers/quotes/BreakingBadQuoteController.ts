@@ -7,9 +7,7 @@ interface BreakingBadQuoteResponse {
 	author: string;
 }
 
-export class BreakingBadQuoteController implements Controller {
-	loopResponse: false;
-
+export class BreakingBadQuoteController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, ...commandType] = command.split(" ");

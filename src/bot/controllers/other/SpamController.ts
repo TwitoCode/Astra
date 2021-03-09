@@ -1,18 +1,17 @@
 import { SettingsSchemaType } from "../../../models/settings";
 import { devError } from "../../utils/devError";
-import { Controller, HandleCommandOptions } from "../Controller";
+import { ControllerWithSettings, HandleCommandOptions } from "../Controller";
 
-export class SpamController implements Controller {
-	settings: SettingsSchemaType;
+export class SpamController extends ControllerWithSettings {
 	loopResponse = true;
 
 	constructor(settings: SettingsSchemaType) {
-		this.settings = settings;
+		super(settings);
 	}
 
 	handleCommand({ command, messageContent }: HandleCommandOptions) {
 		try {
-			if (this.settings.spamming === false) return null;
+			if (this.settings?.spamming === false) return null;
 
 			const [, commandType] = command.split(" ");
 			const [, , ...commandValue] = messageContent!.split(" ");

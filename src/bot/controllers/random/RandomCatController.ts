@@ -6,9 +6,7 @@ interface RandomCatResponse {
 	file: string;
 }
 
-export class RandomCatController implements Controller {
-	loopResponse: false;
-
+export class RandomCatController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType, commandValue] = command.split(" ");

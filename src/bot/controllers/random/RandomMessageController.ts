@@ -3,9 +3,7 @@ import { devError } from "../../utils/devError";
 import { random } from "../../utils/random";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-export class RandomMessageController implements Controller {
-	loopResponse: false;
-
+export class RandomMessageController extends Controller {
 	handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType, commandValue] = command.split(" ");

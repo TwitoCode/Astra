@@ -6,20 +6,20 @@ interface ChuckNorrisQuoteResponse {
 	value: string;
 }
 
-export class ChuckNorrisQuoteController implements Controller {
-	loopResponse: false;
-
+export class ChuckNorrisQuoteController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, ...commandType] = command.split(" ");
 
 			if (commandType.slice(0, 2).join(" ") !== "chuck norris") return null;
 
-			const res = await(await fetch(`https://api.chucknorris.io/jokes/random`)).json() as ChuckNorrisQuoteResponse;
+			const res = (await (
+				await fetch(`https://api.chucknorris.io/jokes/random`)
+			).json()) as ChuckNorrisQuoteResponse;
 
 			return res.value;
 		} catch (err) {
-				return devError(err);
+			return devError(err);
 		}
 	}
 }

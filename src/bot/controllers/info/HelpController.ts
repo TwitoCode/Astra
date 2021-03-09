@@ -2,9 +2,11 @@ import { MessageEmbed } from "discord.js";
 import { devError } from "../../utils/devError";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-export class HelpController implements Controller {
-	loopResponse: false;
-
+export class HelpController extends Controller {
+	constructor() {
+		super();
+	}
+	
 	handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType] = command.split(" ");

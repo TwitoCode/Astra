@@ -1,9 +1,11 @@
 import { devError } from "../../utils/devError";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-export class BeLikeBillController implements Controller {
-	loopResponse: false;
-
+export class BeLikeBillController extends Controller {
+	constructor() {
+		super();
+	}
+	
 	async handleCommand({ command, messageContent }: HandleCommandOptions) {
 		try {
 			const [, commandType] = command.split(" ");

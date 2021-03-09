@@ -6,9 +6,11 @@ interface BoredResponse {
 	activity: string;
 }
 
-export class BoredController implements Controller {
-	loopResponse: false;
-
+export class BoredController extends Controller {
+	constructor() {
+		super();
+	}
+	
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType] = command.split(" ");

@@ -2,9 +2,12 @@ import { devError } from "../../utils/devError";
 import { random } from "../../utils/random";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-export class RockPaperScissorsController implements Controller {
+export class RockPaperScissorsController extends Controller {
 	options: string[] = ["Rock", "Paper", "Scissors"];
-	loopResponse: false;
+
+	constructor() {
+		super();
+	}
 
 	handleCommand({ command }: HandleCommandOptions) {
 		try {

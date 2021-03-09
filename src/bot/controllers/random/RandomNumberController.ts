@@ -2,9 +2,7 @@ import { devError } from "../../utils/devError";
 import { random } from "../../utils/random";
 import { Controller, HandleCommandOptions } from "../Controller";
 
-export class RandomNumberController implements Controller {
-	loopResponse: false;
-
+export class RandomNumberController extends Controller {
 	handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType, commandValue] = command.split(" ");

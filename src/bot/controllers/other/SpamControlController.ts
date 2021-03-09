@@ -1,14 +1,13 @@
 import { SettingsSchemaType } from "../../../models/settings";
 import { devError } from "../../utils/devError";
 import { hasRole } from "../../utils/hasRole";
-import { Controller, HandleCommandOptions } from "../Controller";
+import { ControllerWithSettings, HandleCommandOptions } from "../Controller";
 
-export class SpamControlController implements Controller {
+export class SpamControlController extends ControllerWithSettings {
 	settings: SettingsSchemaType;
-	loopResponse: false;
 
 	constructor(settings: SettingsSchemaType) {
-		this.settings = settings;
+		super(settings);
 	}
 
 	async handleCommand({ command, message }: HandleCommandOptions) {
@@ -16,7 +15,7 @@ export class SpamControlController implements Controller {
 			const { settings } = this;
 			const [, commandType, commandValue] = command.split(" ");
 
-			const memberHasRole = hasRole(message!.member, settings.roles);
+			const memberHasRole = hasRole(message!.member, settings?.roles);
 
 			if (commandValue !== "spam") return null;
 
@@ -34,7 +33,7 @@ export class SpamControlController implements Controller {
 				return "You scrub your not special enough to do that";
 			}
 
-			return `Spamming is turned ${settings.spamming ? "on" : "off"}`;
+			return `Spamming is turned ${settings?.spamming ? "on" : "off"}`;
 		} catch (err) {
 			return devError(err);
 		}

@@ -10,9 +10,7 @@ interface TranslateResponse {
 	};
 }
 
-export class YodaTranslateController implements Controller {
-	loopResponse: false;
-
+export class YodaTranslateController extends Controller {
 	async handleCommand({ command }: HandleCommandOptions) {
 		try {
 			const [, commandType, ...commandValue] = command.split(" ");
