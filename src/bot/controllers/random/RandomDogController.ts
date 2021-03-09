@@ -7,12 +7,15 @@ interface RandomDogResponse {
 }
 
 export class RandomDogController extends Controller {
-	async handleCommand({ command }: HandleCommandOptions) {
+	async handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType, commandValue] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "random dog",
+				inputMessage: false,
+				messageOptions: options,
+			});
 
-			if (commandType !== "random") return null;
-			if (commandValue !== "dog") return null;
+			if (!command) return null;
 
 			const res = (await (
 				await fetch(`https://random.dog/woof.json?ref=apilist.fun`)

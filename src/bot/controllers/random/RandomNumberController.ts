@@ -3,12 +3,15 @@ import { random } from "../../utils/random";
 import { Controller, HandleCommandOptions } from "../Controller";
 
 export class RandomNumberController extends Controller {
-	handleCommand({ command }: HandleCommandOptions) {
+	handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType, commandValue] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "random number",
+				inputMessage: false,
+				messageOptions: options,
+			});
 
-			if (commandType !== "random") return null;
-			if (commandValue !== "number") return null;
+			if (!command) return null;
 
 			return random(1, 100).toString();
 		} catch (err) {

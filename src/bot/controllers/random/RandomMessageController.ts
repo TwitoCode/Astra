@@ -4,12 +4,15 @@ import { random } from "../../utils/random";
 import { Controller, HandleCommandOptions } from "../Controller";
 
 export class RandomMessageController extends Controller {
-	handleCommand({ command }: HandleCommandOptions) {
+	handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType, commandValue] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "random message",
+				inputMessage: false,
+				messageOptions: options,
+			});
 
-			if (commandType !== "random") return null;
-			if (commandValue !== "message") return null;
+			if (!command) return null;
 
 			const index = random(1, randomMessages.length);
 			return randomMessages[index];

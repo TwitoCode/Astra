@@ -6,11 +6,16 @@ export class HelpController extends Controller {
 	constructor() {
 		super();
 	}
-	
-	handleCommand({ command }: HandleCommandOptions) {
+
+	handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType] = command.split(" ");
-			if (commandType !== "help") return null;
+			const command = this.getCommand({
+				expectedMessage: "help",
+				inputMessage: false,
+				messageOptions: options,
+			});
+
+			if (!command) return null;
 
 			return (
 				new MessageEmbed()

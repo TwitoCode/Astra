@@ -7,12 +7,15 @@ interface RandomCatResponse {
 }
 
 export class RandomCatController extends Controller {
-	async handleCommand({ command }: HandleCommandOptions) {
+	async handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType, commandValue] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "random cat",
+				inputMessage: false,
+				messageOptions: options,
+			});
 
-			if (commandType !== "random") return null;
-			if (commandValue !== "cat") return null;
+			if (!command) return null;
 
 			const res = (await (await fetch(`https://aws.random.cat/meow`)).json()) as RandomCatResponse;
 

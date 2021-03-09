@@ -9,10 +9,15 @@ export class RockPaperScissorsController extends Controller {
 		super();
 	}
 
-	handleCommand({ command }: HandleCommandOptions) {
+	handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType] = command.split(" ");
-			if (commandType !== "rps") return null;
+			const command = this.getCommand({
+				expectedMessage: "rps",
+				inputMessage: false,
+				messageOptions: options,
+			});
+
+			if (!command) return null;
 
 			const index = random(0, this.options.length - 1);
 			return `${this.options[index]}`;

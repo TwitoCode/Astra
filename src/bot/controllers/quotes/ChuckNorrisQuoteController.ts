@@ -7,11 +7,15 @@ interface ChuckNorrisQuoteResponse {
 }
 
 export class ChuckNorrisQuoteController extends Controller {
-	async handleCommand({ command }: HandleCommandOptions) {
+	async handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, ...commandType] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "chuck norris",
+				inputMessage: false,
+				messageOptions: options,
+			});
 
-			if (commandType.slice(0, 2).join(" ") !== "chuck norris") return null;
+			if (!command) return null;
 
 			const res = (await (
 				await fetch(`https://api.chucknorris.io/jokes/random`)

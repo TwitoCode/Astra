@@ -6,11 +6,16 @@ export class DiceController extends Controller {
 	constructor() {
 		super();
 	}
-	
-	handleCommand({ command }: HandleCommandOptions) {
+
+	handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType] = command.split(" ");
-			if (commandType !== "dice") return null;
+			const command = this.getCommand({
+				expectedMessage: "dice",
+				inputMessage: false,
+				messageOptions: options,
+			});
+
+			if (!command) return null;
 
 			const number = random(1, 6);
 			return `${number} was rolled`;

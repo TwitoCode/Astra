@@ -10,12 +10,17 @@ export class BoredController extends Controller {
 	constructor() {
 		super();
 	}
-	
-	async handleCommand({ command }: HandleCommandOptions) {
-		try {
-			const [, commandType] = command.split(" ");
 
-			if (commandType !== "bored") return null;
+	async handleCommand(options: HandleCommandOptions) {
+		try {
+			const command = this.getCommand({
+				expectedMessage: "bored",
+				inputMessage: false,
+				messageOptions: options,
+			});
+
+			if (!command) return null;
+
 			const res = (await (await fetch(`https://www.boredapi.com/api/activity`)).json()) as BoredResponse;
 
 			return res.activity;

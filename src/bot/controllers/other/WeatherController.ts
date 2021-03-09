@@ -3,6 +3,7 @@ import { devError } from "../../utils/devError";
 import { Controller, HandleCommandOptions } from "../Controller";
 
 interface WeatherResponse {
+	error?: object;
 	current: {
 		temp_c: number;
 		is_day: number;
@@ -15,18 +16,27 @@ interface WeatherResponse {
 }
 
 export class WeatherController extends Controller {
-	async handleCommand({ command }: HandleCommandOptions) {
+	async handleCommand(options: HandleCommandOptions) {
 		try {
-			const [, commandType, commandValue] = command.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "weather",
+				inputMessage: true,
+				messageOptions: options,
+			});
 
-			if (commandType !== "weather") return null;
-			if (!commandValue) return null;
+			if (!command) return null;
 
-			const { current } = (await (
+			const [_, commandValue] = command;
+
+			const res = (await (
 				await fetch(
 					`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=${commandValue}&aqi=no`
 				)
 			).json()) as WeatherResponse;
+
+			if (res.error) return "That place does not exist can you not spell? smh";
+
+			const { current } = res;
 
 			return `**Temperature:** ${current.temp_c} | **Feels Like:** ${current.feelslike_c} | **Humidity:** ${
 				current.humidity

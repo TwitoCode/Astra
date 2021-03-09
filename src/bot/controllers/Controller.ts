@@ -35,12 +35,24 @@ export abstract class Controller {
 			}
 
 			case false: {
-				const [_, commandType] = messageOptions.messageContent!.split(" ");
+				let commandType: string;
+				const [_, type] = messageOptions.messageContent!.split(" ");
+
+				if (this.commandHasSpace(options.expectedMessage)) {
+					const [_, ...type] = messageOptions.messageContent!.split(" ");
+					commandType = type.join(" ");
+				} else commandType = type;
+
 				if (commandType !== expectedMessage) return null;
 
 				return [commandType];
 			}
 		}
+	}
+
+	private commandHasSpace(str: string): boolean {
+		const hasSpace = str.includes(" ");
+		return hasSpace;
 	}
 }
 
@@ -54,4 +66,3 @@ export abstract class ControllerWithSettings extends Controller {
 
 	abstract handleCommand(options: HandleCommandOptions): HandleCommandReturn | Promise<HandleCommandReturn>;
 }
-
