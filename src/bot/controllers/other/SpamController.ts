@@ -9,17 +9,22 @@ export class SpamController extends ControllerWithSettings {
 		super(settings);
 	}
 
-	handleCommand({ command, messageContent }: HandleCommandOptions) {
+	handleCommand(options: HandleCommandOptions) {
 		try {
 			if (this.settings?.spamming === false) return null;
 
-			const [, commandType] = command.split(" ");
-			const [, , ...commandValue] = messageContent!.split(" ");
+			const command = this.getCommand({
+				expectedMessage: "spam",
+				inputMessage: true,
+				messageOptions: options,
+			});
 
-			if (commandType !== "spam") return null;
-			if (commandValue.length === 0) return "Spamming";
+			if (command === null) return null;
 
-			return commandValue.join(" ");
+			const [_, commandInput] = command;
+			if (commandInput?.length === 0) return "Spamming";
+
+			return commandInput!;
 		} catch (err) {
 			return devError(err);
 		}

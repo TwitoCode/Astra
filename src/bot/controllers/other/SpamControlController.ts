@@ -10,7 +10,7 @@ export class SpamControlController extends ControllerWithSettings {
 		super(settings);
 	}
 
-	async handleCommand({ command, message }: HandleCommandOptions) {
+	async handleCommand({ command, message: message }: HandleCommandOptions) {
 		try {
 			const { settings } = this;
 			const [, commandType, commandValue] = command.split(" ");
