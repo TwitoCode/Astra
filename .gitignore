@@ -1,3 +1,6 @@
 node_modules
-.env 
 dist
+
+.env 
+yarn.lock
+yarn-error.log
