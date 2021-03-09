@@ -12,7 +12,7 @@ export class SpamController implements Controller {
 
 	handleCommand({ command, messageContent }: HandleCommandOptions) {
 		try {
-			if (this.settings.spamming === false) return "";
+			if (this.settings.spamming === false) return null;
 
 			const [, commandType] = command.split(" ");
 			const [, , ...commandValue] = messageContent!.split(" ");

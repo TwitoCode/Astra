@@ -14,7 +14,7 @@ import { RandomDogController } from "../bot/controllers/random/RandomDogControll
 import { RandomMessageController } from "../bot/controllers/random/RandomMessageController";
 import { RandomNumberController } from "../bot/controllers/random/RandomNumberController";
 import { devError } from "../bot/utils/devError";
-import { SettingsModel } from "../models/settings";
+import { SettingsModel, SettingsSchemaType } from "../models/settings";
 import { BoredController } from "./../bot/controllers/other/BoredController";
 import { WeatherController } from "./../bot/controllers/other/WeatherController";
 import { ChuckNorrisQuoteController } from "./../bot/controllers/quotes/ChuckNorrisQuoteController";
@@ -22,7 +22,18 @@ import { RandomCatController } from "./../bot/controllers/random/RandomCatContro
 
 export async function initBot() {
 	try {
-		const settings = await SettingsModel.findOne();
+		let settings: SettingsSchemaType | null = await SettingsModel.findOne();
+
+		while (settings == null) {
+			if ((await SettingsModel.find()).length === 0) {
+				const s = new SettingsModel({ roles: [], spamming: false });
+				settings = await s.save();
+				break;
+			}
+
+			console.log("Running");
+			settings = await SettingsModel.findOne();
+		}
 
 		const controllersWithSettings: Controller[] = settings
 			? [new SpamController(settings), new SpamControlController(settings)]
